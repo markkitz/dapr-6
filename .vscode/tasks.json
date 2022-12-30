@@ -1,0 +1,57 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/OfferService/OfferService.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/OfferService/OfferService.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/src/OfferService/OfferService.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "appId": "offerservice",
+            "appPort": 5115,
+            "httpPort": 3600,
+            "grpcPort": 60000,
+            "config": "C:/DEV/p/dapr-6/src/dapr/config/config.yaml",
+            "componentsPath": "C:/DEV/p/dapr-6/src/dapr/components",
+            "label": "dapr-debug",
+            "type": "dapr",
+            "dependsOn": "build"
+        },
+        {
+            "appId": "offerservice",
+            "label": "daprd-down",
+            "type": "daprd-down"
+        }
+    ]
+}
