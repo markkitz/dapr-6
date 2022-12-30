@@ -1,4 +1,4 @@
-namespace OfferService.Models;
+﻿namespace Onboarding.Models.Offer;
 
 public enum OfferStatus
 {

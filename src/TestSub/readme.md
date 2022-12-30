@@ -1,0 +1,1 @@
+dapr run --app-id TestSub --app-port 5228 --dapr-http-port 50028  --components-path ../dapr/components --config ../dapr/components/config.yaml -- dotnet run

@@ -48,6 +48,7 @@ public class OfferController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] NewOffer newOffer, [FromServices] DaprClient daprClient)//, [FromState("statestore", "city")] StateEntry<WeatherForecast> stateEntry)
     {
+        _logger.LogInformation("hit!!! Post");
         string id = Guid.NewGuid().ToString();
         OfferDoc offerDoc = new OfferDoc(id, newOffer);
         await daprClient.SaveStateAsync("statestore", offerDoc.Id, offerDoc);     

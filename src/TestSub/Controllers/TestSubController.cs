@@ -4,21 +4,23 @@ namespace TestSub.Controllers;
 
 [ApiController]
 [Route("")]
-public class TestSub : ControllerBase
+public class TestSubController : ControllerBase
 {
-    private readonly ILogger<CollectionController> _logger;
+    private readonly ILogger<TestSubController> _logger;
 
-    public CollectionController(ILogger<CollectionController> logger)
+    public TestSubController(ILogger<TestSubController> logger)
     {
         _logger = logger;
     }
 
     [Topic("pubsub", "onboarding")]
-    [HttpPost]
+    [HttpPost("/onboarding")]
     public void Run([FromBody] object message)
     {
         
         Console.WriteLine(message);
+        Console.WriteLine("hit!!!");
+        _logger.LogInformation("hit!!!");
     }
    
 }

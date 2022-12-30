@@ -1,0 +1,38 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: src
+extensions:
+- name: dapr
+  components-path: "./dapr/components/"
+  config: "config"
+  services:
+    offerservice:
+      http-port: 50000
+      grpc-port: 60000
+    competitionservice:
+      http-port: 51000
+      grpc-port: 61000
+    testsub:
+      http-port: 52000
+      grpc-port: 62000   
+services:
+- name: offerservice
+  project: OfferService/OfferService.csproj
+  bindings:
+    - port: 5000
+- name: competitionservice
+  project: CompetitionService/CompetitionService.csproj
+  bindings:
+  - port: 5100
+- name: testsub
+  project: TestSub/TestSub.csproj
+  bindings:
+    - port: 5200  
+- name: redis
+  image: redis
+  bindings:
+    - port: 6379

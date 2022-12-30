@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Competition.Models;
 
 namespace CompetitionService.Controllers;
 
@@ -15,13 +16,10 @@ public class CompetitionController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Competition> Get()
+    public IEnumerable<CompetitionDoc> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new Competition
-        {
-            Id = Guid.NewGuid().ToString(),
-            Name = "Competition " + index
-        })
+        return Enumerable.Range(1, 5)
+        .Select(index => new CompetitionDoc(Guid.NewGuid().ToString(), "Competition " + index))
         .ToArray();
     }
 }

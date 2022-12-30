@@ -1,0 +1,17 @@
+
+
+GET https://localhost:3600/v1.0/state/statestore HTTP/1.1
+
+###
+
+POST http://localhost:50000/v1.0/invoke/offerservice/method/ HTTP/1.1
+content-type: application/json
+
+{
+  "candidateId": "candidate-id",
+  "firstName": "Kristi",
+  "lastName": "Kitz"
+}
+
+###
+
