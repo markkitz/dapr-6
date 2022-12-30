@@ -6,12 +6,20 @@ namespace TestSub.Controllers;
 [Route("")]
 public class TestSub : ControllerBase
 {
+    private readonly ILogger<CollectionController> _logger;
+
+    public CollectionController(ILogger<CollectionController> logger)
+    {
+        _logger = logger;
+    }
 
     [Topic("pubsub", "onboarding")]
-    [HttpPost("/Process")]
+    [HttpPost]
     public void Run([FromBody] object message)
     {
+        
         Console.WriteLine(message);
     }
    
 }
+ 
