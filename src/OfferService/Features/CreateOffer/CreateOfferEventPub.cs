@@ -18,9 +18,9 @@ public class CreateOfferEventPub : IEventPub<OfferCreated>
 
     public async Task PublishEventAsync(OfferCreated eventData)
     {
-        if(eventData == null){
-            throw new ArgumentNullException(nameof(eventData));
-        }
+        // if(eventData == null){
+        //     throw new ArgumentNullException(nameof(eventData));
+        // }
         await _daprClient.PublishEventAsync("pubsub", Topics.OfferNew, eventData);
         _logger.LogInformation($"Published event {eventData.GetType().Name}");
     }
