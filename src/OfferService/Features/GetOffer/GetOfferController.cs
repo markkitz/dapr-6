@@ -11,14 +11,14 @@ namespace OfferService.Controllers;
 
 [ApiController]
 [Route("")]
-public class OfferController : ControllerBase
+public class GetOfferController : ControllerBase
 {
-    private readonly ILogger<OfferController> _logger;
+    private readonly ILogger<GetOfferController> _logger;
     private readonly IMapper _mapper;
     private readonly IOfferRepository _offerRepository;
     private const string _pubSub = "pubsub";
 
-    public OfferController(ILogger<OfferController> logger, IMapper mapper, IOfferRepository offerRepository)
+    public GetOfferController(ILogger<GetOfferController> logger, IMapper mapper, IOfferRepository offerRepository)
     {
         _logger = logger;
         _mapper = mapper;
@@ -26,22 +26,14 @@ public class OfferController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Offer> Get([FromState("statestore", "id")] StateEntry<Offer> offerDoc)
+    public async Task<IActionResult> Get(string id)
     {
+        var offerDoc = await _offerRepository.GetOfferStateAsync(id);
         if (offerDoc.Value == null)
         {
             return NotFound();
         }
-        return offerDoc.Value;
+        return new JsonResult(offerDoc);
     }
 
-
-    
-
-    // private string GetOfferUpdatedMessage(string prefix, Offer offer)
-    // {
-    //     return $"{prefix} for {offer.FirstName} {offer.LastName}. " +
-    //     $"Offer ID: {offer.Id} " +
-    //     $"Offer Status: {offer.Status}";
-    // }
 }
