@@ -1,12 +1,9 @@
 using AutoMapper;
-using Dapr;
-using Dapr.Client;
 using Microsoft.AspNetCore.Mvc;
 using OfferService.Helpers;
 using OfferService.Models;
 using OfferService.Repositories;
 using Onboarding.EventPubs;
-using Onboarding.Models.Offer;
 using Onboarding.Models.Offer.Events;
 
 namespace OfferService.Features.CreateOffer;

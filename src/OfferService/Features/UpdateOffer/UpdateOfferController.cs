@@ -37,7 +37,6 @@ public class UpdateOfferController : ControllerBase
         {
             return NotFound();
         }
-
         Offer updatedOffer = state.Value with { Status = OfferStatus.ManagerSignOffRequested };
         OfferUpdated eventData = _mapper.Map<OfferUpdated>(updatedOffer);
         await _offerRepository.SaveOfferStateAsync(updatedOffer);

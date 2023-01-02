@@ -2,7 +2,7 @@ using AutoMapper;
 using OfferService.Models;
 using Onboarding.Models.Offer.Events;
 
-namespace OfferService.Mappers;
+namespace OfferService.Helpers;
 
 public class OfferMapper : Profile
 {
