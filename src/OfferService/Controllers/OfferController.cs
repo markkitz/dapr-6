@@ -1,8 +1,10 @@
+using AutoMapper;
 using Dapr;
 using Dapr.Client;
 using Microsoft.AspNetCore.Mvc;
-using OfferService.Events;
 using OfferService.Models;
+using Onboarding.Models.Offer;
+using Onboarding.Models.Offer.Events;
 
 namespace OfferService.Controllers;
 
@@ -10,50 +12,60 @@ namespace OfferService.Controllers;
 [Route("")]
 public class OfferController : ControllerBase
 {
-    // private static readonly string[] Summaries = new[]
-    // {
-    //     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    // };
-
     private readonly ILogger<OfferController> _logger;
+    private readonly IMapper _mapper;
 
-    public OfferController(ILogger<OfferController> logger)
+    public OfferController(ILogger<OfferController> logger, IMapper mapper)
     {
         _logger = logger;
+        _mapper = mapper;
     }
 
-    // [HttpGet(Name = "GetWeatherForecast")]
-    // public IEnumerable<WeatherForecast> Get([FromServices] DaprClient daprClient)
-    // {
-    //     return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-    //     {
-    //         Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-    //         TemperatureC = Random.Shared.Next(-20, 55),
-    //         Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-    //     })
-    //     .ToArray();
-    // }
-
     [HttpGet("{id}")]
-    public ActionResult<OfferDoc> Get([FromState("statestore", "id")] StateEntry<OfferDoc> offerDoc)
+    public ActionResult<Offer> Get([FromState("statestore", "id")] StateEntry<Offer> offerDoc)
     {
         if (offerDoc.Value == null)
         {
-        return NotFound();
+            return NotFound();
         }
 
         return offerDoc.Value;
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] NewOffer newOffer, [FromServices] DaprClient daprClient)//, [FromState("statestore", "city")] StateEntry<WeatherForecast> stateEntry)
+    public async Task<IActionResult> NewOffer([FromBody] NewOffer newOffer, [FromServices] DaprClient daprClient)
     {
-        _logger.LogInformation("hit!!! Post");
-        string id = Guid.NewGuid().ToString();
-        OfferDoc offerDoc = new OfferDoc(id, newOffer);
-        await daprClient.SaveStateAsync("statestore", offerDoc.Id, offerDoc);     
-        await daprClient.PublishEventAsync("pubsub", "onboarding", offerDoc);   
-        return new OkObjectResult(offerDoc);
+        Offer offer = _mapper.Map<Offer>(newOffer);
+        OfferCreated offerCreated = _mapper.Map<OfferCreated>(offer);
+        await daprClient.SaveStateAsync("statestore", offer.Id, offer);
+        await daprClient.PublishEventAsync("pubsub", Topics.OfferNew, offerCreated);
+        _logger.LogInformation(GetOfferUpdatedMessage("New offer created", offer));
+        return new OkObjectResult(offerCreated);
     }
 
+    [HttpPut("/ManagerSignOffRequested/{id}")]
+    public async Task<IActionResult> ManagerSignOffRequested([FromState("statestore", "id")] StateEntry<Offer> keyValue, [FromServices] DaprClient daprClient)
+    {
+        Offer updatedOffer = keyValue.Value with { Status = OfferStatus.ManagerSignOffRequested };
+        await daprClient.SaveStateAsync("statestore", updatedOffer.Id, updatedOffer);
+        await daprClient.PublishEventAsync("pubsub", Topics.OfferUpdated, updatedOffer);
+        _logger.LogInformation(GetOfferUpdatedMessage("ManagerSignOffRequested", updatedOffer));
+        return new OkObjectResult(updatedOffer);
+    }
+    [HttpPut("/ManagerSignOff/{id}")]
+    public async Task<IActionResult> UpdateOffer([FromBody] ManagerSignOff signOff, [FromState("statestore", "id")] StateEntry<Offer> keyValue, [FromServices] DaprClient daprClient)
+    {
+        OfferStatus status = signOff.Approved ? OfferStatus.AwaitingDocumentCreation : OfferStatus.ManagerNotApproved;
+        Offer updatedOffer = keyValue.Value with { Status = status };
+        await daprClient.SaveStateAsync("statestore", updatedOffer.Id, updatedOffer);
+        await daprClient.PublishEventAsync("pubsub", Topics.OfferUpdated, updatedOffer);
+        return new OkObjectResult(updatedOffer);
+    }
+
+    private string GetOfferUpdatedMessage(string prefix, Offer offer)
+    {
+        return $"{prefix} for {offer.FirstName} {offer.LastName}. " +
+        $"Offer ID: {offer.Id} " +
+        $"Offer Status: {offer.Status}";
+    }
 }

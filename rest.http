@@ -10,7 +10,14 @@ content-type: application/json
 {
   "candidateId": "candidate-id",
   "firstName": "Kristi",
-  "lastName": "Kitz"
+  "lastName": "Kitz",
+  "personalEmail": "test@test.ca",
+  "manager": "markk",
+  "competitionId": "competition-id",
+  "positionName": "position-name",
+  "level": "20",
+  "step": 5,
+  "salary": 100000
 }
 
 ###

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Dapr;
+using Onboarding.Models.Offer.Events;
+
 namespace TestSub.Controllers;
 
 [ApiController]
@@ -13,14 +15,12 @@ public class TestSubController : ControllerBase
         _logger = logger;
     }
 
-    [Topic("pubsub", "onboarding")]
-    [HttpPost("/onboarding")]
-    public void Run([FromBody] object message)
-    {
-        
-        Console.WriteLine(message);
-        Console.WriteLine("hit!!!");
-        _logger.LogInformation("hit!!!");
+    [Topic("pubsub", "offer.new")]
+    [HttpPost("/newoffer")]
+    public void NewOffer([FromBody] OfferCreated offer)
+    {       
+        _logger.LogInformation($"Offer Created for {offer.FirstName} {offer.LastName}. " +
+        $"Offer ID: {offer.Id}");
     }
    
 }
