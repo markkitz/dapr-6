@@ -1,4 +1,5 @@
 using AutoMapper;
+using OfferService.Features.CreateOffer;
 using OfferService.Models;
 using Onboarding.Models.Offer.Events;
 

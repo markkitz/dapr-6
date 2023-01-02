@@ -1,4 +1,4 @@
-namespace OfferService.Models;
+namespace OfferService.Features.UpdateOffer;
 
 public record struct ManagerSignOff
 {

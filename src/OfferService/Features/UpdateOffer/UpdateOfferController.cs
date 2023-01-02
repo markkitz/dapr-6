@@ -1,6 +1,4 @@
 using AutoMapper;
-using Dapr;
-using Dapr.Client;
 using Microsoft.AspNetCore.Mvc;
 using OfferService.Helpers;
 using OfferService.Models;
@@ -9,7 +7,7 @@ using Onboarding.EventPubs;
 using Onboarding.Models.Offer;
 using Onboarding.Models.Offer.Events;
 
-namespace OfferService.Features.CreateOffer;
+namespace OfferService.Features.UpdateOffer;
 
 [ApiController]
 [Route("")]
@@ -30,7 +28,7 @@ public class UpdateOfferController : ControllerBase
     }
 
    [HttpPut("/ManagerSignOffRequested/{id}")]
-    public async Task<IActionResult> ManagerSignOffRequested(string id, [FromServices] DaprClient daprClient)
+    public async Task<IActionResult> ManagerSignOffRequested(string id)
     {
         var state = await _offerRepository.GetOfferStateAsync(id);
         if(state == null)
@@ -45,7 +43,7 @@ public class UpdateOfferController : ControllerBase
         return new OkObjectResult(updatedOffer);
     }
     [HttpPut("/ManagerSignOff/{id}")]
-    public async Task<IActionResult> UpdateOffer(string id, [FromBody] ManagerSignOff signOff, [FromServices] DaprClient daprClient)
+    public async Task<IActionResult> UpdateOffer(string id, [FromBody] ManagerSignOff signOff)
     {
         var state = await _offerRepository.GetOfferStateAsync(id);
         if(state == null)

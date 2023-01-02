@@ -1,4 +1,4 @@
-namespace OfferService.Models;
+namespace OfferService.Features.CreateOffer;
 
 public record struct NewOffer
 {
