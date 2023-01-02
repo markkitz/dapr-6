@@ -1,9 +1,12 @@
 
 
 using OfferService.Models;
+using OfferService.Repositories;
 using Onboarding.Models.Offer.Events;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IOfferRepository, DaprOfferRepository>();
 
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(Offer), typeof(OfferCreated));

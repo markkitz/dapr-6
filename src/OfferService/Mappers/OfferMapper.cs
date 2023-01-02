@@ -2,13 +2,14 @@ using AutoMapper;
 using OfferService.Models;
 using Onboarding.Models.Offer.Events;
 
-namespace OfferService.Profiles;
+namespace OfferService.Mappers;
 
-public class OfferProfile : Profile
+public class OfferMapper : Profile
 {
-    public OfferProfile()
+    public OfferMapper()
     {
         CreateMap<Offer, OfferCreated>().ReverseMap();
+        CreateMap<Offer, OfferUpdated>().ReverseMap();
         CreateMap<NewOffer, Offer>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid().ToString()));
     }
 }
