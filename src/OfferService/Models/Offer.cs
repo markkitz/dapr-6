@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Onboarding.Models.Offer;
+using Onboarding.Core.Offer;
 
 namespace OfferService.Models;
 

@@ -4,8 +4,8 @@ using OfferService.Helpers;
 using OfferService.Models;
 using OfferService.Repositories;
 using Onboarding.EventPubs;
-using Onboarding.Models.Offer;
-using Onboarding.Models.Offer.Events;
+using Onboarding.Core.Offer;
+using Onboarding.Core.Offer.Events;
 
 namespace OfferService.Features.UpdateOffer;
 

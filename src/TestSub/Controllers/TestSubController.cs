@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Dapr;
-using Onboarding.Models.Offer.Events;
+using Onboarding.Core.Offer.Events;
 
 namespace TestSub.Controllers;
 

@@ -2,7 +2,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Onboarding.Models.Offer;
+namespace Onboarding.Core.Offer;
 
 public class OfferStatusJsonConverter : JsonConverter<OfferStatus>
 {

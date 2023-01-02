@@ -1,9 +1,9 @@
 using System.Text.Json.Serialization;
-using Onboarding.Models.Offer;
+using Onboarding.Core.Offer;
 
-namespace Onboarding.Models.Offer.Events;
+namespace Onboarding.Core.Offer.Events;
 
-public record struct OfferCreated
+public record struct OfferUpdated
 {
     public string Id { get; init; }
     public string CandidateId { get; init; }

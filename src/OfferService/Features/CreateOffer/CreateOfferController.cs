@@ -1,10 +1,10 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using OfferService.Helpers;
-using OfferService.Models;
 using OfferService.Repositories;
 using Onboarding.EventPubs;
-using Onboarding.Models.Offer.Events;
+using Onboarding.Core.Offer.Events;
+using OfferService.Models;
 
 namespace OfferService.Features.CreateOffer;
 

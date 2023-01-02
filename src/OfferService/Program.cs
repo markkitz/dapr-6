@@ -5,7 +5,7 @@ using OfferService.Features.UpdateOffer;
 using OfferService.Models;
 using OfferService.Repositories;
 using Onboarding.EventPubs;
-using Onboarding.Models.Offer.Events;
+using Onboarding.Core.Offer.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 

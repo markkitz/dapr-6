@@ -1,7 +1,7 @@
 using Dapr.Client;
 using Onboarding.EventPubs;
-using Onboarding.Models.Offer;
-using Onboarding.Models.Offer.Events;
+using Onboarding.Core.Offer;
+using Onboarding.Core.Offer.Events;
 
 namespace OfferService.Features.CreateOffer;
 
