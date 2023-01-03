@@ -20,6 +20,21 @@ content-type: application/json
   "salary": 100000
 }
 
+
+### INVALID REQUEST
+
+POST http://localhost:50000/v1.0/invoke/offerservice/method/ HTTP/1.1
+content-type: application/json
+
+{
+  "candidateId": "candidate-id",
+  "firstName": "Krist!!!123",
+  "lastName": "Kitz",
+  "personalEmail": "test@test.ca",
+  "manager": "markk",
+  "competitionId": "competition-id"
+
+}
 ###
 PUT http://localhost:50000/v1.0/invoke/offerservice/method/ManagerSignOffRequested/7a780c3e-91b2-44c3-9b64-ab249dfe751b
 

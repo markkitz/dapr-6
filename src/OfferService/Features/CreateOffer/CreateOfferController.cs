@@ -5,6 +5,8 @@ using OfferService.Repositories;
 using Onboarding.EventPubs;
 using Onboarding.Core.Offer.Events;
 using OfferService.Models;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace OfferService.Features.CreateOffer;
 
@@ -16,18 +18,25 @@ public class CreateOfferController : ControllerBase
     private readonly IMapper _mapper;
     private readonly IOfferRepository _offerRepository;
     private readonly IEventPub<OfferCreated> _eventPub;
+    private readonly IValidator<NewOffer> _validator;
 
-    public CreateOfferController(ILogger<CreateOfferController> logger, IMapper mapper, IOfferRepository offerRepository,  IEventPub<OfferCreated> pub )
+    public CreateOfferController(ILogger<CreateOfferController> logger, IMapper mapper, IOfferRepository offerRepository,  IEventPub<OfferCreated> pub, IValidator<NewOffer> validator )
     {
         _logger = logger;
         _mapper = mapper;
         _offerRepository = offerRepository;
         _eventPub = pub;
+        _validator = validator;
     }
 
     [HttpPost]
     public async Task<IActionResult> NewOffer([FromBody] NewOffer newOffer)
     {
+        ValidationResult result = _validator.Validate(newOffer);
+        if(!result.IsValid)
+        {
+            return new BadRequestObjectResult(result.Errors);
+        }
         Offer offer = _mapper.Map<Offer>(newOffer);
         OfferCreated offerCreated = _mapper.Map<OfferCreated>(offer);
         await _offerRepository.SaveOfferStateAsync(offer);

@@ -6,12 +6,14 @@ using OfferService.Models;
 using OfferService.Repositories;
 using Onboarding.EventPubs;
 using Onboarding.Core.Offer.Events;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IOfferRepository, DaprOfferRepository>();
 builder.Services.AddSingleton<IEventPub<OfferCreated>, CreateOfferEventPub>();
 builder.Services.AddSingleton<IEventPub<OfferUpdated>, UpdateOfferEventPub>();
+builder.Services.AddValidatorsFromAssemblyContaining<NewOfferValidator>();
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(Offer), typeof(OfferCreated));
 builder.Services.AddDaprClient();
