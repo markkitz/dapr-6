@@ -36,12 +36,12 @@ content-type: application/json
 
 }
 ###
-PUT http://localhost:50000/v1.0/invoke/offerservice/method/ManagerSignOffRequested/7a780c3e-91b2-44c3-9b64-ab249dfe751b
+PUT http://localhost:50000/v1.0/invoke/offerservice/method/ManagerSignOffRequested/322768b2-7425-4371-87fb-a65baf253e6c
 
 ###
-PUT http://localhost:50000/v1.0/invoke/offerservice/method/ManagerSignOff/7a780c3e-91b2-44c3-9b64-ab249dfe751b
+PUT http://localhost:50000/v1.0/invoke/offerservice/method/ManagerSignOff/322768b2-7425-4371-87fb-a65baf253e6c
 content-type: application/json
 
 {
-  "approved":  true
+  "approved": true
 }

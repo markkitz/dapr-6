@@ -4,7 +4,7 @@ namespace OfferService.Features.UpdateOffer;
 
 public record struct ManagerSignOff
 {
-    public bool Approved { get; init; }
+    public bool? Approved { get; init; }
 }
 
 public class ManagerSignOffValidator : AbstractValidator<ManagerSignOff>

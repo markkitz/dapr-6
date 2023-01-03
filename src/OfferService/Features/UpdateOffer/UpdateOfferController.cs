@@ -50,16 +50,16 @@ public class UpdateOfferController : ControllerBase
     public async Task<IActionResult> UpdateOffer(string id, [FromBody] ManagerSignOff signOff)
     {
         ValidationResult result = _managerSignoffValidator.Validate(signOff);
-        if (!result.IsValid)
+        if (!result.IsValid || !signOff.Approved.HasValue )
         {
-            return new BadRequestObjectResult(result.Errors);
+            return new BadRequestObjectResult(result.Errors );
         }
         var state = await _offerRepository.GetOfferStateAsync(id);
         if (state == null)
         {
             return NotFound();
         }
-        OfferStatus status = signOff.Approved ? OfferStatus.AwaitingDocumentCreation : OfferStatus.ManagerNotApproved;
+        OfferStatus status = signOff.Approved.Value ? OfferStatus.AwaitingDocumentCreation : OfferStatus.ManagerNotApproved;
         Offer updatedOffer = state.Value with { Status = status };
         OfferUpdated eventData = _mapper.Map<OfferUpdated>(updatedOffer);
         await _offerRepository.SaveOfferStateAsync(updatedOffer);
