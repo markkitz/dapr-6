@@ -6,6 +6,8 @@ using OfferService.Repositories;
 using Onboarding.EventPubs;
 using Onboarding.Core.Offer;
 using Onboarding.Core.Offer.Events;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace OfferService.Features.UpdateOffer;
 
@@ -17,21 +19,23 @@ public class UpdateOfferController : ControllerBase
     private readonly IMapper _mapper;
     private readonly IOfferRepository _offerRepository;
     private readonly IEventPub<OfferUpdated> _eventPub;
+    private readonly IValidator<ManagerSignOff> _managerSignoffValidator;
 
-
-    public UpdateOfferController(ILogger<UpdateOfferController> logger, IMapper mapper, IOfferRepository offerRepository, IEventPub<OfferUpdated> eventPub)
+    public UpdateOfferController(ILogger<UpdateOfferController> logger, IMapper mapper, 
+    IOfferRepository offerRepository, IEventPub<OfferUpdated> eventPub, IValidator<ManagerSignOff> managerSignoffValidator)
     {
         _logger = logger;
         _mapper = mapper;
         _offerRepository = offerRepository;
         _eventPub = eventPub;
+        _managerSignoffValidator = managerSignoffValidator;
     }
 
-   [HttpPut("/ManagerSignOffRequested/{id}")]
+    [HttpPut("/ManagerSignOffRequested/{id}")]
     public async Task<IActionResult> ManagerSignOffRequested(string id)
     {
         var state = await _offerRepository.GetOfferStateAsync(id);
-        if(state == null)
+        if (state == null)
         {
             return NotFound();
         }
@@ -39,14 +43,19 @@ public class UpdateOfferController : ControllerBase
         OfferUpdated eventData = _mapper.Map<OfferUpdated>(updatedOffer);
         await _offerRepository.SaveOfferStateAsync(updatedOffer);
         await _eventPub.PublishEventAsync(eventData);
-         _logger.LogInformation(OfferLogger.getMessage("Manager SignOff Requested", updatedOffer, $"Manager: {updatedOffer.manager}"));
+        _logger.LogInformation(OfferLogger.getMessage("Manager SignOff Requested", updatedOffer, $"Manager: {updatedOffer.manager}"));
         return new OkObjectResult(updatedOffer);
     }
     [HttpPut("/ManagerSignOff/{id}")]
     public async Task<IActionResult> UpdateOffer(string id, [FromBody] ManagerSignOff signOff)
     {
+        ValidationResult result = _managerSignoffValidator.Validate(signOff);
+        if (!result.IsValid)
+        {
+            return new BadRequestObjectResult(result.Errors);
+        }
         var state = await _offerRepository.GetOfferStateAsync(id);
-        if(state == null)
+        if (state == null)
         {
             return NotFound();
         }
@@ -58,7 +67,5 @@ public class UpdateOfferController : ControllerBase
         _logger.LogInformation(OfferLogger.getMessage("Manager SignOff", updatedOffer, $"Approved: {signOff.Approved} Manager: {updatedOffer.manager}"));
         return new OkObjectResult(updatedOffer);
     }
-
-
 
 }
