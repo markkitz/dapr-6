@@ -24,4 +24,16 @@ public class DaprOfferRepository : IOfferRepository
             DAPR_STORE_NAME, id);
         return stateEntry.Value;
     }
+
+    public async Task<IReadOnlyList<Dapr.Client.StateQueryItem<OfferService.Models.Offer>>> GetOffersAsync()
+    {
+        var query = "{" +
+                    "\"filter\": {" +
+                       
+                    "}}";
+        var queryResponse = await _daprClient
+            .QueryStateAsync<Offer>(DAPR_STORE_NAME, query);
+        
+        return queryResponse.Results;
+    }
 }
