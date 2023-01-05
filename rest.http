@@ -1,6 +1,6 @@
 
 
-GET http://localhost:50000/v1.0/invoke/offerservice/method/7a780c3e-91b2-44c3-9b64-ab249dfe751b HTTP/1.1
+GET http://localhost:50000/v1.0/invoke/offerservice/method/e498dab5-77b5-4f19-a6f8-51c0897dd HTTP/1.1
 
 ###
 
@@ -8,15 +8,15 @@ POST http://localhost:50000/v1.0/invoke/offerservice/method/ HTTP/1.1
 content-type: application/json
 
 {
-  "candidateId": "candidate-id",
-  "firstName": "Kristi",
+  "candidateId": "candidate-id-123123",
+  "firstName": "Mark",
   "lastName": "Kitz",
   "personalEmail": "test@test.ca",
   "manager": "markk",
-  "competitionId": "competition-id",
+  "competitionId": "competition-id-123123",
   "positionName": "position-name",
   "level": "20",
-  "step": 5,
+  "step": 3,
   "salary": 100000
 }
 
@@ -27,8 +27,8 @@ POST http://localhost:50000/v1.0/invoke/offerservice/method/ HTTP/1.1
 content-type: application/json
 
 {
-  "candidateId": "candidate-id",
-  "firstName": "Krist!!!123",
+  "candidateId": "candidate-id-123123",
+  "firstName": "sdsdf!!!123",
   "lastName": "Kitz",
   "personalEmail": "test@test.ca",
   "manager": "markk",
@@ -39,7 +39,7 @@ content-type: application/json
 PUT http://localhost:50000/v1.0/invoke/offerservice/method/ManagerSignOffRequested/322768b2-7425-4371-87fb-a65baf253e6c
 
 ###
-PUT http://localhost:50000/v1.0/invoke/offerservice/method/ManagerSignOff/322768b2-7425-4371-87fb-a65baf253e6c
+PUT http://localhost:50000/v1.0/invoke/offerservice/method/ManagerSignOff/005c0c5d-92f6-47b5-9219-33048ca9c97d
 content-type: application/json
 
 {

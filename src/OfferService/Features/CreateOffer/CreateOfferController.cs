@@ -7,6 +7,7 @@ using Onboarding.Core.Offer.Events;
 using OfferService.Models;
 using FluentValidation;
 using FluentValidation.Results;
+using System.Diagnostics;
 
 namespace OfferService.Features.CreateOffer;
 
@@ -39,6 +40,8 @@ public class CreateOfferController : ControllerBase
         }
         Offer offer = _mapper.Map<Offer>(newOffer);
         OfferCreated offerCreated = _mapper.Map<OfferCreated>(offer);
+        Activity.Current?.AddTag("OfferId", offer.Id);
+        Activity.Current?.AddTag("CompetitionId", offer.CompetitionId);
         await _offerRepository.SaveOfferStateAsync(offer);
         await _eventPub.PublishEventAsync(offerCreated);
         _logger.LogInformation(OfferLogger.getMessage("New offer created", offer));

@@ -7,8 +7,15 @@ using OfferService.Repositories;
 using Onboarding.EventPubs;
 using Onboarding.Core.Offer.Events;
 using FluentValidation;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
+using OpenTelemetry;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+var serviceName = "OfferService";
+// var serviceVersion = "1.0.0";
 
 builder.Services.AddSingleton<IOfferRepository, DaprOfferRepository>();
 builder.Services.AddSingleton<IEventPub<OfferCreated>, CreateOfferEventPub>();
@@ -21,6 +28,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddOpenTelemetry()
+        .WithTracing((builder) => builder
+            .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName))
+            .AddAspNetCoreInstrumentation()
+            .AddZipkinExporter())
+        .StartWithHost();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
