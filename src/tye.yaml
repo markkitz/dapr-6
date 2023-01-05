@@ -12,7 +12,7 @@ extensions:
   services:
     offerservice:
       http-port: 50000
-      grpc-port: 60000
+      grpc-port: 60500
     competitionservice:
       http-port: 51000
       grpc-port: 61000
