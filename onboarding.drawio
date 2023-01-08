@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="dPSJuCqdpPLRIj-6rHPX" name="Services and Events">
-        <mxGraphModel dx="1404" dy="687" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1200" math="0" shadow="0">
+        <mxGraphModel dx="1138" dy="601" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1200" math="0" shadow="0">
             <root>
                 <mxCell id="4tAnN8jbqSkkGbERE4eA-0"/>
                 <mxCell id="4tAnN8jbqSkkGbERE4eA-1" parent="4tAnN8jbqSkkGbERE4eA-0"/>
@@ -79,7 +79,7 @@
                         <mxPoint x="-184.83333333333326" y="807" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="ZhGx_7sAbn-ji2-krsBM-34" value="Offer Sent" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;fontColor=#FFFFFF;strokeColor=#FFFFFF;strokeWidth=2;" parent="W0tWSwDXoUZTlSm5Tcsa-0" target="ciz800winpQHYa7LlWTX-0" edge="1">
+                <mxCell id="ZhGx_7sAbn-ji2-krsBM-34" value="Offer Accepted" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;fontColor=#FFFFFF;strokeColor=#FFFFFF;strokeWidth=2;" parent="W0tWSwDXoUZTlSm5Tcsa-0" target="ciz800winpQHYa7LlWTX-0" edge="1">
                     <mxGeometry width="60" relative="1" as="geometry">
                         <mxPoint x="9.810344827586277" y="852" as="sourcePoint"/>
                         <mxPoint x="173" y="852" as="targetPoint"/>
@@ -203,7 +203,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="MOoCUTmpz61Id_W1DL8F" name="Offer Flow">
-        <mxGraphModel dx="1138" dy="687" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1200" math="0" shadow="0">
+        <mxGraphModel dx="1138" dy="601" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1200" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
