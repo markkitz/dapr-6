@@ -5,6 +5,18 @@
 #    https://aka.ms/AA7q20u
 #
 name: src
+registry: markkitz
+ingress:
+  - name: ingress
+    bindings:
+      - port: 8888
+        protocol: http
+    rules:
+      - path: /offer
+        service: offerservice
+      - path: /competition
+        service: competitionservice
+
 extensions:
 - name: dapr
   components-path: "./dapr/components/"

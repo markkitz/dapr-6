@@ -1,6 +1,6 @@
 
 
-GET http://localhost:50000/v1.0/invoke/offerservice/method/e498dab5-77b5-4f19-a6f8-51c0897dd HTTP/1.1
+GET http://localhost:50000/v1.0/invoke/offerservice/method/45f6e3fc-c7bc-4c76-b80c-1fb6d6ce16f2 HTTP/1.1
 
 ###
 
@@ -9,7 +9,7 @@ content-type: application/json
 
 {
   "candidateId": "candidate-id-123123",
-  "firstName": "Mark",
+  "firstName": "Joe",
   "lastName": "Kitz",
   "personalEmail": "test@test.ca",
   "manager": "markk",

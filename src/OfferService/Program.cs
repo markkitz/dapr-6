@@ -15,7 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 var serviceName = "OfferService";
-// var serviceVersion = "1.0.0";
+
+
 
 builder.Services.AddSingleton<IOfferRepository, DaprOfferRepository>();
 builder.Services.AddSingleton<IEventPub<OfferCreated>, CreateOfferEventPub>();
@@ -25,6 +26,10 @@ builder.Services.AddValidatorsFromAssemblyContaining<NewOfferValidator>();
 builder.Services.AddAutoMapper(typeof(Offer), typeof(OfferCreated));
 builder.Services.AddDaprClient();
 builder.Services.AddControllers();
+// (options =>
+// {
+//     options.Filters.Add(new TestFilter());
+// });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -33,6 +38,7 @@ builder.Services.AddOpenTelemetry()
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName))
             .AddAspNetCoreInstrumentation()
             .AddZipkinExporter())
+            .WithMetrics()
         .StartWithHost();
 var app = builder.Build();
 

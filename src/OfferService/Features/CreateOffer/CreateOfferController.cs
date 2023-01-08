@@ -31,9 +31,10 @@ public class CreateOfferController : ControllerBase
     }
 
     [HttpPost]
+    [TestFilter("CreateOfferController.NewOffer")]
     public async Task<IActionResult> NewOffer([FromBody] NewOffer newOffer)
     {
-        ValidationResult result = _validator.Validate(newOffer);
+        ValidationResult result = _validator.Validate(newOffer);  
         if(!result.IsValid)
         {
             return new BadRequestObjectResult(result.Errors);
